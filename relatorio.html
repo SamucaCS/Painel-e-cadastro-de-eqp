@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Painel de controle - Equipamentos Escolares</title>
+
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- CSS da página de relatórios -->
+    <link rel="stylesheet" href="relatorios.css" />
+
+    <!-- Chart.js (gráfico) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="bg-grid"></div>
+
+    <header class="site-header">
+        <div class="container nav">
+            <div class="brand">
+                <div class="logo-dot"></div>
+                <div>
+                    <span class="brand-name">Relatório de Equipamentos</span>
+                    <span class="brand-role">Rede de Escolas</span>
+                </div>
+            </div>
+
+            <nav class="nav-links">
+                <a href="cadastro.html">Cadastro de equipamentos para manutenção</a>
+                <a href="lista.html">Lista dos itens cadastrados</a>
+                <a href="relatorio.html" class="active">Painel de controle dos Equipamentos</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <!-- Cabeçalho -->
+        <section class="page-header">
+            <div>
+                <h1>Painel de controle - Equipamentos Escolares</h1>
+                <p>
+                    Painel consolidado dos equipamentos escolares. Visualize o total geral ou filtre por escola
+                    e atualize as quantidades em tempo real.
+                </p>
+            </div>
+            <div class="pill">
+                <span class="pill-dot"></span>
+                <span id="viewModeLabel">Visão geral – Todas as escolas</span>
+            </div>
+        </section>
+
+        <!-- Filtros -->
+        <section class="filters">
+            <div class="filter-group">
+                <label for="schoolSelect">Escola</label>
+                <select id="schoolSelect">
+                    <option value="all">Carregando escolas...</option>
+                </select>
+            </div>
+            <div class="filter-hint">
+                <span>💡 Dica:</span>
+                <span>Selecione uma escola para editar as quantidades de equipamentos.</span>
+            </div>
+        </section>
+
+        <!-- Cards + Gráfico -->
+        <section class="grid-top">
+            <!-- Resumo -->
+            <div class="summary-cards card">
+                <div class="metric-card">
+                    <p class="metric-label">Total de equipamentos</p>
+                    <p class="metric-value" id="totalEquip">0</p>
+                </div>
+
+                <div class="metric-card">
+                    <p class="metric-label">Notebook Positivo</p>
+                    <p class="metric-value" id="totalPositivo">0</p>
+                </div>
+
+                <div class="metric-card">
+                    <p class="metric-label">Notebook Lenovo</p>
+                    <p class="metric-value" id="totalLenovo">0</p>
+                </div>
+
+                <div class="metric-card">
+                    <p class="metric-label">Desktops</p>
+                    <p class="metric-value" id="totalDesktop">0</p>
+                </div>
+
+                <div class="metric-card">
+                    <p class="metric-label">Tablets</p>
+                    <p class="metric-value" id="totalTablet">0</p>
+                </div>
+
+                <div class="metric-card">
+                    <p class="metric-label">Celulares</p>
+                    <p class="metric-value" id="totalCelular">0</p>
+                </div>
+            </div>
+
+            <!-- Gráfico -->
+            <div class="card chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h2>Distribuição por tipo de equipamento</h2>
+                        <p class="chart-subtitle">
+                            Os dados se ajustam conforme você seleciona uma escola ou altera as quantidades.
+                        </p>
+                    </div>
+                </div>
+                <canvas id="equipmentChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Painel de edição -->
+        <section class="card edit-panel">
+            <div class="edit-header">
+                <div>
+                    <h2>Editar equipamentos da escola</h2>
+                    <p>
+                        Escolha uma escola para alterar as quantidades de cada tipo de equipamento. Ao salvar, o painel
+                        e o gráfico são atualizados automaticamente.
+                    </p>
+                </div>
+                <span class="edit-status" id="editStatusBadge">Selecione uma escola</span>
+            </div>
+
+            <form id="editForm" class="edit-form">
+                <div class="edit-grid">
+                    <div class="field">
+                        <label for="inputPositivo">Notebook Positivo</label>
+                        <input type="number" id="inputPositivo" min="0" step="1" />
+                    </div>
+
+                    <div class="field">
+                        <label for="inputLenovo">Notebook Lenovo</label>
+                        <input type="number" id="inputLenovo" min="0" step="1" />
+                    </div>
+
+                    <div class="field">
+                        <label for="inputDesktop">Desktop</label>
+                        <input type="number" id="inputDesktop" min="0" step="1" />
+                    </div>
+
+                    <div class="field">
+                        <label for="inputTablet">Tablet</label>
+                        <input type="number" id="inputTablet" min="0" step="1" />
+                    </div>
+
+                    <div class="field">
+                        <label for="inputCelular">Celular</label>
+                        <input type="number" id="inputCelular" min="0" step="1" />
+                    </div>
+                </div>
+
+                <div class="edit-actions">
+                    <button type="submit" id="btnSaveChanges">Salvar alterações</button>
+                    <span id="editMessage" class="edit-message"></span>
+                </div>
+            </form>
+
+            <p class="edit-info">
+                ⚠️ Quando a opção <strong>"Todas as escolas"</strong> estiver selecionada, a edição fica desabilitada,
+                pois os valores são consolidados. Selecione uma escola específica para alterar os números dela.
+            </p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span>Relatório de Equipamentos Escolares</span>
+            <span class="dot-separator"></span>
+            <span>Painel de Indicadores</span>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+    <script src="relatorios.js"></script>
+</body>
+
+</html>
