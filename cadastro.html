@@ -18,7 +18,7 @@
 <body>
   <div class="bg-grid"></div>
 
-  <!-- HEADER / MENU -->
+
   <header class="site-header">
     <div class="container nav">
       <div class="brand">
@@ -45,7 +45,7 @@
       </div>
     </section>
 
-    <!-- ALERTA DE SUCESSO CONTROLADO PELO JS -->
+   
     <div id="successAlert" class="alert-success" style="display: none;">
       Registro salvo com sucesso no Supabase ✅
     </div>
@@ -53,9 +53,9 @@
     <section class="card">
       <h2 style="margin-bottom: 1.5rem;">Novo registro de equipamento</h2>
 
-      <!-- form SEM action, pois o JS vai cuidar do envio -->
+   
       <form id="formCadastro" class="edit-form">
-        <!-- ESCOLA -->
+     
         <div class="field">
           <label for="escola">Escola</label>
           <select id="escola" name="escola" required>
@@ -128,7 +128,7 @@
           </select>
         </div>
 
-        <!-- TIPO DE EQUIPAMENTO -->
+        
         <div class="field">
           <label for="tipo_equipamento">Tipo de equipamento</label>
           <select id="tipo_equipamento" name="tipo_equipamento" required>
@@ -141,20 +141,20 @@
           </select>
         </div>
 
-        <!-- DATA -->
+
         <div class="field">
           <label for="data_ocorrencia">Data</label>
           <input type="date" id="data_ocorrencia" name="data_ocorrencia" />
         </div>
 
-        <!-- DESCRIÇÃO DO PROBLEMA -->
+   
         <div class="field">
           <label for="descricao_problema">Descrição do problema</label>
           <textarea id="descricao_problema" name="descricao_problema" rows="4"
             placeholder="Descreva o problema, sintomas, número de patrimônio, etc."></textarea>
         </div>
 
-        <!-- RESOLVIDO -->
+     
         <div class="field">
           <label>Foi resolvido?</label>
           <div class="radio-group">
@@ -169,7 +169,7 @@
           </div>
         </div>
 
-        <!-- MOTIVO NÃO RESOLVIDO -->
+    
         <div class="field" id="campoMotivo" style="display: none;">
           <label for="motivo_nao_resolvido">Motivo de não ter sido resolvido</label>
           <textarea id="motivo_nao_resolvido" name="motivo_nao_resolvido" rows="3"
@@ -191,7 +191,7 @@
     </div>
   </footer>
 
-  <!-- Supabase JS + seu script -->
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="script.js"></script>
 
