@@ -1,17 +1,10 @@
-// ======================================
-// CONFIGURAÇÃO DO SUPABASE
-// ======================================
 const SUPABASE_URL = "https://thcxlfpxjokvegkzcjuh.supabase.co";
 const SUPABASE_ANON_KEY =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRoY3hsZnB4am9rdmVna3pjanVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMjc0OTQsImV4cCI6MjA3OTcwMzQ5NH0.rv_qmpcdx-OU01bz1NPw3pGRTntAh389XwSZ3G59xRM";
-
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-// ID QUE VEM PELA URL (cadastro.html?id=123)
 const urlParams = new URLSearchParams(window.location.search);
 const EDIT_ID = urlParams.get("id") ? Number(urlParams.get("id")) : null;
 
-// Helper para escapar HTML
 function escapeHTML(str = "") {
     return String(str).replace(/[&<>"']/g, (m) => {
         switch (m) {
@@ -39,9 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputMotivo = document.getElementById("motivo_nao_resolvido");
     const tabelaContainer = document.getElementById("tabela-container");
 
-    // ======================================
-    // ALERTA DE SUCESSO (topo do cadastro)
-    // ======================================
+  
     function mostrarSucesso(msg) {
         if (!successAlert) return;
         successAlert.textContent = msg;
@@ -56,9 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 3000);
     }
 
-    // ======================================
-    // MOSTRAR / OCULTAR MOTIVO NÃO RESOLVIDO
-    // ======================================
+
     function atualizarVisibilidadeMotivo() {
         if (!campoMotivo || !radiosResolvido.length) return;
         const selecionado = document.querySelector(
@@ -81,10 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         atualizarVisibilidadeMotivo();
     }
 
-    // ======================================
-    // CARREGAR REGISTRO PARA EDIÇÃO
-    // (quando abre cadastro.html?id=123)
-    // ======================================
+   
     async function carregarRegistroParaEdicao(id) {
         if (!formCadastro) return;
 
@@ -103,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!data) return;
 
-            // Preenche campos do formulário
+           
             const campoEscola = document.getElementById("escola");
             const campoTipo = document.getElementById("tipo_equipamento");
             const campoData = document.getElementById("data_ocorrencia");
@@ -114,12 +100,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (campoData && data.data_ocorrencia) {
                 const dt = new Date(data.data_ocorrencia);
-                campoData.value = dt.toISOString().slice(0, 10); // yyyy-MM-dd
+                campoData.value = dt.toISOString().slice(0, 10); 
             }
 
             if (campoDesc) campoDesc.value = data.descricao_problema || "";
 
-            // Resolvido / Não resolvido
+           
             const valorResolvido = data.resolvido_boolean ? "sim" : "nao";
             const radio = document.querySelector(
                 `input[name="resolvido"][value="${valorResolvido}"]`
@@ -132,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             atualizarVisibilidadeMotivo();
 
-            // Muda texto do botão
+           
             const botao = formCadastro.querySelector("button[type='submit']");
             if (botao) botao.textContent = "Salvar alterações";
         } catch (err) {
@@ -141,9 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ======================================
-    // SUBMIT DO FORMULÁRIO (INSERT / UPDATE)
-    // ======================================
+    
     async function handleSubmitCadastro(event) {
         event.preventDefault();
 
@@ -183,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             if (EDIT_ID) {
-                // ==== UPDATE ====
+                
                 const { error } = await supabase
                     .from("cadastros_equipamentos")
                     .update(payload)
@@ -197,12 +181,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 mostrarSucesso("Registro atualizado com sucesso ✅");
 
-                // Volta para a lista após atualizar
+                
                 setTimeout(() => {
                     window.location.href = "lista.html";
                 }, 800);
             } else {
-                // ==== INSERT ====
+               
                 const { error } = await supabase
                     .from("cadastros_equipamentos")
                     .insert(payload);
@@ -226,15 +210,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (formCadastro) {
         formCadastro.addEventListener("submit", handleSubmitCadastro);
 
-        // Se entrou com ?id= na URL, carrega o registro
         if (EDIT_ID) {
             carregarRegistroParaEdicao(EDIT_ID);
         }
     }
 
-    // ======================================
-    // LISTA – CARREGAR TABELA NA lista.html
-    // ======================================
     async function carregarTabela() {
         if (!tabelaContainer) return;
 
@@ -315,14 +295,10 @@ document.addEventListener("DOMContentLoaded", () => {
         inicializarAcoesTabela();
     }
 
-    // ======================================
-    // BOTÕES EDITAR / EXCLUIR DA LISTA
-    // ======================================
     function inicializarAcoesTabela() {
         const botoesEditar = document.querySelectorAll(".btn-table--edit");
         const botoesExcluir = document.querySelectorAll(".btn-table--danger");
 
-        // EDITAR → abre cadastro.html?id=ID
         botoesEditar.forEach((btn) => {
             btn.addEventListener("click", () => {
                 const id = Number(btn.getAttribute("data-id"));
@@ -331,7 +307,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // EXCLUIR → delete no Supabase
         botoesExcluir.forEach((btn) => {
             btn.addEventListener("click", async () => {
                 const id = Number(btn.getAttribute("data-id"));
@@ -351,20 +326,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-                // recarrega a tabela
                 carregarTabela();
             });
         });
     }
 
-    // Se estiver na lista, carrega a tabela
     if (tabelaContainer) {
         carregarTabela();
     }
 
-    // ======================================
-    // DESTACAR ABA ATIVA DO MENU
-    // ======================================
+  
     const navLinks = document.querySelectorAll(".nav-links a");
     if (navLinks.length) {
         navLinks.forEach((link) => {
