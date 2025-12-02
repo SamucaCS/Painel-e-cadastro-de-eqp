@@ -4,7 +4,6 @@ const SUPABASE_ANON_KEY =
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const urlParams = new URLSearchParams(window.location.search);
 const EDIT_ID = urlParams.get("id") ? Number(urlParams.get("id")) : null;
-
 function escapeHTML(str = "") {
     return String(str).replace(/[&<>"']/g, (m) => {
         switch (m) {
@@ -32,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputMotivo = document.getElementById("motivo_nao_resolvido");
     const tabelaContainer = document.getElementById("tabela-container");
 
-  
     function mostrarSucesso(msg) {
         if (!successAlert) return;
         successAlert.textContent = msg;
@@ -46,8 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 400);
         }, 3000);
     }
-
-
     function atualizarVisibilidadeMotivo() {
         if (!campoMotivo || !radiosResolvido.length) return;
         const selecionado = document.querySelector(
@@ -70,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
         atualizarVisibilidadeMotivo();
     }
 
-   
     async function carregarRegistroParaEdicao(id) {
         if (!formCadastro) return;
 
@@ -89,11 +84,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!data) return;
 
-           
             const campoEscola = document.getElementById("escola");
             const campoTipo = document.getElementById("tipo_equipamento");
             const campoData = document.getElementById("data_ocorrencia");
             const campoDesc = document.getElementById("descricao_problema");
+            const campoNumeroSerie = document.getElementById("numero_serie");
 
             if (campoEscola) campoEscola.value = data.escola_nome || "";
             if (campoTipo) campoTipo.value = data.tipo_equipamento || "";
@@ -104,8 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (campoDesc) campoDesc.value = data.descricao_problema || "";
+            if (campoNumeroSerie) campoNumeroSerie.value = data.numero_serie || "";
 
-           
             const valorResolvido = data.resolvido_boolean ? "sim" : "nao";
             const radio = document.querySelector(
                 `input[name="resolvido"][value="${valorResolvido}"]`
@@ -118,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             atualizarVisibilidadeMotivo();
 
-           
             const botao = formCadastro.querySelector("button[type='submit']");
             if (botao) botao.textContent = "Salvar alterações";
         } catch (err) {
@@ -126,8 +120,6 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Erro inesperado ao preencher edição.");
         }
     }
-
-    
     async function handleSubmitCadastro(event) {
         event.preventDefault();
 
@@ -137,6 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const descricao = document
             .getElementById("descricao_problema")
             .value.trim();
+        const numeroSerie = document
+            .getElementById("numero_serie")
+            .value.trim();
+
         const motivo = inputMotivo ? inputMotivo.value.trim() : "";
 
         const resolvidoSelecionado = document.querySelector(
@@ -163,11 +159,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 : motivo !== ""
                     ? motivo
                     : null,
+            numero_serie: numeroSerie || null,
         };
 
         try {
             if (EDIT_ID) {
-                
+               
                 const { error } = await supabase
                     .from("cadastros_equipamentos")
                     .update(payload)
@@ -181,12 +178,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 mostrarSucesso("Registro atualizado com sucesso ✅");
 
-                
                 setTimeout(() => {
                     window.location.href = "lista.html";
                 }, 800);
             } else {
-               
+           
                 const { error } = await supabase
                     .from("cadastros_equipamentos")
                     .insert(payload);
@@ -199,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 formCadastro.reset();
                 atualizarVisibilidadeMotivo();
-                mostrarSucesso("Registro salvo com sucesso✅");
+                mostrarSucesso("Registro salvo com sucesso ✅");
             }
         } catch (err) {
             console.error("Erro inesperado ao salvar:", err);
@@ -214,7 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
             carregarRegistroParaEdicao(EDIT_ID);
         }
     }
-
     async function carregarTabela() {
         if (!tabelaContainer) return;
 
@@ -260,6 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <tr data-id="${item.id}">
             <td data-label="Data">${dataBr}</td>
             <td data-label="Escola">${escapeHTML(item.escola_nome)}</td>
+            <td data-label="Patrimônio">${escapeHTML(item.numero_serie || "")}</td>
             <td data-label="Equip.">${escapeHTML(item.tipo_equipamento)}</td>
             <td data-label="Descrição do problema">${escapeHTML(item.descricao_problema || "")}</td>
             <td data-label="Status" class="${statusClasse}">${statusTexto}</td>
@@ -279,6 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <tr>
             <th>Data</th>
             <th>Escola</th>
+            <th>Patrimônio</th>
             <th>Equip.</th>
             <th>Descrição do problema</th>
             <th>Status</th>
@@ -294,7 +291,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         inicializarAcoesTabela();
     }
-
     function inicializarAcoesTabela() {
         const botoesEditar = document.querySelectorAll(".btn-table--edit");
         const botoesExcluir = document.querySelectorAll(".btn-table--danger");
@@ -334,8 +330,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (tabelaContainer) {
         carregarTabela();
     }
-
-  
     const navLinks = document.querySelectorAll(".nav-links a");
     if (navLinks.length) {
         navLinks.forEach((link) => {
