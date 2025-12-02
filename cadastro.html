@@ -45,7 +45,7 @@
       </div>
     </section>
 
-   
+
     <div id="successAlert" class="alert-success" style="display: none;">
       Registro salvo com sucesso no Supabase ✅
     </div>
@@ -53,9 +53,9 @@
     <section class="card">
       <h2 style="margin-bottom: 1.5rem;">Novo registro de equipamento</h2>
 
-   
+
       <form id="formCadastro" class="edit-form">
-     
+
         <div class="field">
           <label for="escola">Escola</label>
           <select id="escola" name="escola" required>
@@ -128,7 +128,7 @@
           </select>
         </div>
 
-        
+
         <div class="field">
           <label for="tipo_equipamento">Tipo de equipamento</label>
           <select id="tipo_equipamento" name="tipo_equipamento" required>
@@ -147,14 +147,19 @@
           <input type="date" id="data_ocorrencia" name="data_ocorrencia" />
         </div>
 
-   
+        <div class="field">
+          <label for="numero_serie">Número de série / patrimônio</label>
+          <input type="text" id="numero_serie" name="numero_serie" placeholder="Ex.: S123456 ou 000123" />
+        </div>
+
+
         <div class="field">
           <label for="descricao_problema">Descrição do problema</label>
           <textarea id="descricao_problema" name="descricao_problema" rows="4"
             placeholder="Descreva o problema, sintomas, número de patrimônio, etc."></textarea>
         </div>
 
-     
+
         <div class="field">
           <label>Foi resolvido?</label>
           <div class="radio-group">
@@ -169,7 +174,7 @@
           </div>
         </div>
 
-    
+
         <div class="field" id="campoMotivo" style="display: none;">
           <label for="motivo_nao_resolvido">Motivo de não ter sido resolvido</label>
           <textarea id="motivo_nao_resolvido" name="motivo_nao_resolvido" rows="3"
