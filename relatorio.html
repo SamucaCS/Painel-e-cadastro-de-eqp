@@ -12,10 +12,9 @@
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
         rel="stylesheet" />
 
-   
     <link rel="stylesheet" href="relatorios.css" />
 
-  
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 
@@ -41,7 +40,8 @@
     </header>
 
     <main class="container main-content">
-     
+
+        <!-- Cabeçalho da página -->
         <section class="page-header">
             <div>
                 <h1>Painel de controle - Equipamentos Escolares</h1>
@@ -56,7 +56,7 @@
             </div>
         </section>
 
-       
+        <!-- Filtros -->
         <section class="filters">
             <div class="filter-group">
                 <label for="schoolSelect">Escola</label>
@@ -70,9 +70,10 @@
             </div>
         </section>
 
-   
+        <!-- Cards + gráfico -->
         <section class="grid-top">
-            
+
+            <!-- Cards de resumo -->
             <div class="summary-cards card">
                 <div class="metric-card">
                     <p class="metric-label">Total de equipamentos</p>
@@ -87,6 +88,11 @@
                 <div class="metric-card">
                     <p class="metric-label">Notebook Lenovo</p>
                     <p class="metric-value" id="totalLenovo">0</p>
+                </div>
+
+                <div class="metric-card">
+                    <p class="metric-label">Notebook Chromebook</p>
+                    <p class="metric-value" id="totalChromebook">0</p>
                 </div>
 
                 <div class="metric-card">
@@ -105,6 +111,7 @@
                 </div>
             </div>
 
+            <!-- Gráfico -->
             <div class="card chart-card">
                 <div class="chart-header">
                     <div>
@@ -118,7 +125,7 @@
             </div>
         </section>
 
-      
+        <!-- Painel de edição -->
         <section class="card edit-panel">
             <div class="edit-header">
                 <div>
@@ -141,6 +148,11 @@
                     <div class="field">
                         <label for="inputLenovo">Notebook Lenovo</label>
                         <input type="number" id="inputLenovo" min="0" step="1" />
+                    </div>
+
+                    <div class="field">
+                        <label for="inputChromebook">Notebook Chromebook</label>
+                        <input type="number" id="inputChromebook" min="0" step="1" />
                     </div>
 
                     <div class="field">
@@ -180,9 +192,7 @@
         </div>
     </footer>
 
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-
     <script src="relatorios.js"></script>
 </body>
 
