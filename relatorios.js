@@ -1,7 +1,10 @@
+// 1. Renomeamos para supabaseClient para evitar conflito com a biblioteca global
 const SUPABASE_URL = "https://aifreazongolahcnvhrp.supabase.co";
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpZnJlYXpvbmdvbGFoY252aHJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU0MDY0NjIsImV4cCI6MjA4MDk4MjQ2Mn0.QbSVAONBBKFQY51RkIy5iOasdUoX0xyrz3iqFpgrGjs";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpZnJlYXpvbmdvbGFoY252aHJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU0MDY0NjIsImV4cCI6MjA4MDk4MjQ2Mn0.QbSVAONBBKFQY51RkIy5iOasdUoX0xyrz3iqFpgrGjs";
+
+// Usamos o 'window.supabase' da biblioteca para criar o NOSSO 'supabaseClient'
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 const TABLE_NAME = "escola_equipamentos";
 let escolas = [];
 let equipmentChart = null;
@@ -94,7 +97,8 @@ async function carregarEscolasDoBanco() {
   editMessage.textContent = "Carregando dados das escolas...";
   btnSaveChanges.disabled = true;
 
-  const { data, error } = await supabase
+  // Alterado de supabase para supabaseClient
+  const { data, error } = await supabaseClient
     .from(TABLE_NAME)
     .select("*")
     .order("escola_nome", { ascending: true });
@@ -106,51 +110,32 @@ async function carregarEscolasDoBanco() {
   }
 
   escolas = data || [];
-  console.log("Escolas carregadas:", escolas);
-
   detectarColunasDoBanco();
-
   editMessage.textContent = "";
   btnSaveChanges.disabled = false;
 }
 
 async function salvarEscolaNoBanco(escola) {
   const id = escola.id;
-  const escola_nome = escola.escola_nome;
-
-  const payload = {
-    updated_at: new Date().toISOString(),
-  };
+  const payload = { updated_at: new Date().toISOString() };
 
   if (DB_KEYS.positivo) payload[DB_KEYS.positivo] = getField(escola, "positivo");
   if (DB_KEYS.lenovo) payload[DB_KEYS.lenovo] = getField(escola, "lenovo");
-  if (DB_KEYS.chromebook)
-    payload[DB_KEYS.chromebook] = getField(escola, "chromebook");
-  if (DB_KEYS.multilaser)
-    payload[DB_KEYS.multilaser] = getField(escola, "multilaser");
+  if (DB_KEYS.chromebook) payload[DB_KEYS.chromebook] = getField(escola, "chromebook");
+  if (DB_KEYS.multilaser) payload[DB_KEYS.multilaser] = getField(escola, "multilaser");
   if (DB_KEYS.desktop) payload[DB_KEYS.desktop] = getField(escola, "desktop");
   if (DB_KEYS.tablet) payload[DB_KEYS.tablet] = getField(escola, "tablet");
   if (DB_KEYS.celular) payload[DB_KEYS.celular] = getField(escola, "celular");
 
-  console.log("Enviando update para o Supabase:", { id, escola_nome, payload });
-
-  const { data, error, status } = await supabase
+  // Alterado de supabase para supabaseClient
+  const { data, error } = await supabaseClient
     .from(TABLE_NAME)
     .update(payload)
     .eq("id", id)
     .select();
 
-  console.log("Resposta do update:", { status, data, error });
-
   if (error) {
-    alert(
-      "Erro ao atualizar no banco:\n\n" +
-      (error.message || "") +
-      "\n" +
-      (error.details || "") +
-      "\n" +
-      (error.hint || "")
-    );
+    alert("Erro ao atualizar no banco: " + error.message);
     throw error;
   }
 }
