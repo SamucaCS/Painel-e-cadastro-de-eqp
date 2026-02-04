@@ -1,208 +1,240 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Painel de controle - Equipamentos Escolares</title>
+    <title>Dashboard - Gestão de Equipamentos</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap"
-        rel="stylesheet" />
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <link rel="stylesheet" href="relatorios.css" />
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="bg-grid"></div>
 
     <header class="site-header">
-        <div class="container nav">
-            <div class="brand">
-                <div class="logo-dot"></div>
-                <div>
-                    <span class="brand-name">Relatório de Equipamentos</span>
-                    <span class="brand-role">Rede de Escolas</span>
-                </div>
-            </div>
-
-            <nav class="nav-links">
-                <a href="cadastro.html">Cadastro de equipamentos para manutenção</a>
-                <a href="lista.html">Lista dos itens cadastrados</a>
-                <a href="relatorio.html" class="active">Painel de controle dos Equipamentos</a>
-            </nav>
+      <div class="container nav">
+        <div class="brand">
+          <div class="logo-dot"></div>
+          <div>
+            <span class="brand-name">Controle SEINTEC</span>
+            <span class="brand-role">Controle de Ativos</span>
+          </div>
         </div>
+
+        <nav class="nav-links">
+          <a href="cadastro.html">Cadastro</a>
+          <a href="lista.html">Lista</a>
+          <a href="relatorio.html" class="active">Dashboard</a>
+        </nav>
+      </div>
     </header>
 
     <main class="container main-content">
+      <section class="dashboard-header">
+        <div class="header-text">
+          <h1>Visão Geral da Rede</h1>
+          <p>Acompanhamento em tempo real do inventário escolar.</p>
+        </div>
 
-        <!-- Cabeçalho da página -->
-        <section class="page-header">
+        <div class="school-selector-wrapper">
+          <i class="ph ph-buildings"></i>
+          <select id="schoolSelect">
+            <option value="all">Carregando escolas...</option>
+          </select>
+          <div class="selector-status" id="viewModeLabel">Visão Geral</div>
+        </div>
+      </section>
+
+      <div class="dashboard-grid">
+        <section class="stats-column">
+          <div class="stat-card total-card">
+            <div class="stat-icon-wrapper">
+              <i class="ph-fill ph-stack"></i>
+            </div>
             <div>
-                <h1>Painel de controle - Equipamentos Escolares</h1>
-                <p>
-                    Painel consolidado dos equipamentos escolares. Visualize o total geral ou filtre por escola
-                    e atualize as quantidades em tempo real.
-                </p>
+              <span class="stat-label">Total de Ativos</span>
+              <h2 class="stat-value big" id="totalEquip">0</h2>
             </div>
-            <div class="pill">
-                <span class="pill-dot"></span>
-                <span id="viewModeLabel">Visão geral – Todas as escolas</span>
+          </div>
+
+          <div class="chart-container">
+            <div class="chart-header">
+              <h3>Distribuição</h3>
             </div>
+            <div class="chart-wrapper">
+              <canvas id="equipmentChart"></canvas>
+            </div>
+          </div>
         </section>
 
-        <!-- Filtros -->
-        <section class="filters">
-            <div class="filter-group">
-                <label for="schoolSelect">Escola</label>
-                <select id="schoolSelect">
-                    <option value="all">Carregando escolas...</option>
-                </select>
+        <section class="details-column">
+          <div class="section-title-row">
+            <h3>Inventário Detalhado</h3>
+            <span class="live-indicator"
+              ><span class="dot"></span> Atualizado</span
+            >
+          </div>
+
+          <form id="editForm" class="inventory-grid">
+            <div class="inventory-card">
+              <div class="inv-header">
+                <i class="ph-duotone ph-laptop"></i>
+                <span>Positivo</span>
+              </div>
+              <div class="inv-body">
+                <span class="read-value" id="totalPositivo">0</span>
+                <input
+                  type="number"
+                  id="inputPositivo"
+                  class="edit-input"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
             </div>
-            <div class="filter-hint">
-                <span>💡 Dica:</span>
-                <span>Selecione uma escola para editar as quantidades de equipamentos.</span>
+
+            <div class="inventory-card">
+              <div class="inv-header">
+                <i class="ph-duotone ph-laptop"></i>
+                <span>Lenovo</span>
+              </div>
+              <div class="inv-body">
+                <span class="read-value" id="totalLenovo">0</span>
+                <input
+                  type="number"
+                  id="inputLenovo"
+                  class="edit-input"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
             </div>
+
+            <div class="inventory-card">
+              <div class="inv-header">
+                <i class="ph-duotone ph-google-chrome-logo"></i>
+                <span>Chromebook</span>
+              </div>
+              <div class="inv-body">
+                <span class="read-value" id="totalChromebook">0</span>
+                <input
+                  type="number"
+                  id="inputChromebook"
+                  class="edit-input"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+
+            <div class="inventory-card">
+              <div class="inv-header">
+                <i class="ph-duotone ph-laptop"></i>
+                <span>Multilaser</span>
+              </div>
+              <div class="inv-body">
+                <span class="read-value" id="totalMultilaser">0</span>
+                <input
+                  type="number"
+                  id="inputMultilaser"
+                  class="edit-input"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+
+            <div class="inventory-card">
+              <div class="inv-header">
+                <i class="ph-duotone ph-desktop"></i>
+                <span>Desktop</span>
+              </div>
+              <div class="inv-body">
+                <span class="read-value" id="totalDesktop">0</span>
+                <input
+                  type="number"
+                  id="inputDesktop"
+                  class="edit-input"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+
+            <div class="inventory-card">
+              <div class="inv-header">
+                <i class="ph-duotone ph-device-tablet-camera"></i>
+                <span>Tablet</span>
+              </div>
+              <div class="inv-body">
+                <span class="read-value" id="totalTablet">0</span>
+                <input
+                  type="number"
+                  id="inputTablet"
+                  class="edit-input"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+
+            <div class="inventory-card">
+              <div class="inv-header">
+                <i class="ph-duotone ph-device-mobile"></i>
+                <span>Celular</span>
+              </div>
+              <div class="inv-body">
+                <span class="read-value" id="totalCelular">0</span>
+                <input
+                  type="number"
+                  id="inputCelular"
+                  class="edit-input"
+                  min="0"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+
+            <div class="action-card">
+              <div id="editInfoBox" class="info-text">
+                Selecione uma escola acima para habilitar a edição.
+              </div>
+              <button
+                type="submit"
+                id="btnSaveChanges"
+                class="btn-save"
+                disabled
+              >
+                <i class="ph-bold ph-floppy-disk"></i>
+                Salvar Alterações
+              </button>
+              <span id="editMessage" class="status-msg"></span>
+            </div>
+          </form>
         </section>
-
-        <!-- Cards + gráfico -->
-        <section class="grid-top">
-
-            <!-- Cards de resumo -->
-            <div class="summary-cards card">
-                <div class="metric-card">
-                    <p class="metric-label">Total de equipamentos</p>
-                    <p class="metric-value" id="totalEquip">0</p>
-                </div>
-
-                <div class="metric-card">
-                    <p class="metric-label">Notebook Positivo</p>
-                    <p class="metric-value" id="totalPositivo">0</p>
-                </div>
-
-                <div class="metric-card">
-                    <p class="metric-label">Notebook Lenovo</p>
-                    <p class="metric-value" id="totalLenovo">0</p>
-                </div>
-
-                <div class="metric-card">
-                    <p class="metric-label">Notebook Chromebook</p>
-                    <p class="metric-value" id="totalChromebook">0</p>
-                </div>
-
-                <div class="metric-card">
-                    <p class="metric-label">Notebook Multilaser</p>
-                    <p class="metric-value" id="totalMultilaser">0</p>
-                </div>
-
-                <div class="metric-card">
-                    <p class="metric-label">Desktops</p>
-                    <p class="metric-value" id="totalDesktop">0</p>
-                </div>
-
-                <div class="metric-card">
-                    <p class="metric-label">Tablets</p>
-                    <p class="metric-value" id="totalTablet">0</p>
-                </div>
-
-                <div class="metric-card">
-                    <p class="metric-label">Celulares</p>
-                    <p class="metric-value" id="totalCelular">0</p>
-                </div>
-            </div>
-
-            <!-- Gráfico -->
-            <div class="card chart-card">
-                <div class="chart-header">
-                    <div>
-                        <h2>Distribuição por tipo de equipamento</h2>
-                        <p class="chart-subtitle">
-                            Os dados se ajustam conforme você seleciona uma escola ou altera as quantidades.
-                        </p>
-                    </div>
-                </div>
-                <canvas id="equipmentChart"></canvas>
-            </div>
-        </section>
-
-        <!-- Painel de edição -->
-        <section class="card edit-panel">
-            <div class="edit-header">
-                <div>
-                    <h2>Editar equipamentos da escola</h2>
-                    <p>
-                        Escolha uma escola para alterar as quantidades de cada tipo de equipamento. Ao salvar, o painel
-                        e o gráfico são atualizados automaticamente.
-                    </p>
-                </div>
-                <span class="edit-status" id="editStatusBadge">Selecione uma escola</span>
-            </div>
-
-            <form id="editForm" class="edit-form">
-                <div class="edit-grid">
-                    <div class="field">
-                        <label for="inputPositivo">Notebook Positivo</label>
-                        <input type="number" id="inputPositivo" min="0" step="1" />
-                    </div>
-
-                    <div class="field">
-                        <label for="inputLenovo">Notebook Lenovo</label>
-                        <input type="number" id="inputLenovo" min="0" step="1" />
-                    </div>
-
-                    <div class="field">
-                        <label for="inputChromebook">Notebook Chromebook</label>
-                        <input type="number" id="inputChromebook" min="0" step="1" />
-                    </div>
-
-                    <div class="field">
-                        <label for="inputMultilaser">Notebook Multilaser</label>
-                        <input type="number" id="inputMultilaser" min="0" step="1" />
-                    </div>
-
-                    <div class="field">
-                        <label for="inputDesktop">Desktop</label>
-                        <input type="number" id="inputDesktop" min="0" step="1" />
-                    </div>
-
-                    <div class="field">
-                        <label for="inputTablet">Tablet</label>
-                        <input type="number" id="inputTablet" min="0" step="1" />
-                    </div>
-
-                    <div class="field">
-                        <label for="inputCelular">Celular</label>
-                        <input type="number" id="inputCelular" min="0" step="1" />
-                    </div>
-                </div>
-
-                <div class="edit-actions">
-                    <button type="submit" id="btnSaveChanges">Salvar alterações</button>
-                    <span id="editMessage" class="edit-message"></span>
-                </div>
-            </form>
-
-            <p class="edit-info">
-                ⚠️ Quando a opção <strong>"Todas as escolas"</strong> estiver selecionada, a edição fica desabilitada,
-                pois os valores são consolidados. Selecione uma escola específica para alterar os números dela.
-            </p>
-        </section>
+      </div>
     </main>
 
     <footer class="site-footer">
-        <div class="container footer-inner">
-            <span>Relatório de Equipamentos Escolares</span>
-            <span class="dot-separator"></span>
-            <span>Painel de Indicadores</span>
-        </div>
+      <div class="container footer-inner">
+        <span>Gestão TI</span>
+        <span class="dot-separator"></span>
+        <span>Painel Administrativo v2.0</span>
+      </div>
     </footer>
 
     <script src="relatorios.js"></script>
-</body>
-
+  </body>
 </html>
