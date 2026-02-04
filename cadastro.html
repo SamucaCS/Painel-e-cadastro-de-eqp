@@ -1,205 +1,329 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cadastro - Gestão Escolar</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cadastro de Equipamentos – Rede de Escolas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
 
-  <link rel="stylesheet" href="styles.css" />
-</head>
+  <body>
+    <div class="bg-grid"></div>
 
-<body>
-  <div class="bg-grid"></div>
-
-
-  <header class="site-header">
-    <div class="container nav">
-      <div class="brand">
-        <div class="logo-dot"></div>
-        <div>
-          <span class="brand-name">Cadastro de Equipamentos</span>
-          <span class="brand-role">Rede de Escolas</span>
-        </div>
-      </div>
-
-      <nav class="nav-links">
-        <a href="cadastro.html">Cadastro de equipamentos para manutenção</a>
-        <a href="lista.html">Lista dos itens cadastrados</a>
-        <a href="relatorio.html">Painel de controle dos Equipamentos</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container main-content">
-    <section class="page-header">
-      <div>
-        <h1>Cadastro de Equipamentos</h1>
-        <p>Registre ocorrências, problemas e status de resolução dos equipamentos em cada escola.</p>
-      </div>
-    </section>
-
-
-    <div id="successAlert" class="alert-success" style="display: none;">
-      Registro salvo com sucesso no Supabase ✅
-    </div>
-
-    <section class="card">
-      <h2 style="margin-bottom: 1.5rem;">Novo registro de equipamento</h2>
-
-
-      <form id="formCadastro" class="edit-form">
-
-        <div class="field">
-          <label for="escola">Escola</label>
-          <select id="escola" name="escola" required>
-            <option value="">Selecione uma escola</option>
-            <option value="ALFREDO ROBERTO">ALFREDO ROBERTO</option>
-            <option value="ALICE ROMANOS PROFESSORA">ALICE ROMANOS PROFESSORA</option>
-            <option value="ANDERSON DA SILVA SOARES">ANDERSON DA SILVA SOARES</option>
-            <option value="ANGELA SUELI PONTES DIAS PROFESSORA">ANGELA SUELI PONTES DIAS PROFESSORA</option>
-            <option value="ANIS FADUL DOUTOR">ANIS FADUL DOUTOR</option>
-            <option value="ANTONIO BRASILIO MENEZES DA FONSECA PROFESSOR">ANTONIO BRASILIO MENEZES DA FONSECA PROFESSOR
-            </option>
-            <option value="ANTONIO GARCIA VEREADOR">ANTONIO GARCIA VEREADOR</option>
-            <option value="ANTONIO JOSE CAMPOS DE MENEZES PROFESSOR">ANTONIO JOSE CAMPOS DE MENEZES PROFESSOR</option>
-            <option value="ANTONIO RODRIGUES DE ALMEIDA">ANTONIO RODRIGUES DE ALMEIDA</option>
-            <option value="ANTONIO VALDEMAR GALO VEREADOR">ANTONIO VALDEMAR GALO VEREADOR</option>
-            <option value="BATISTA RENZI">BATISTA RENZI</option>
-            <option value="BENEDITA DE CAMPOS MARCOLONGO PROFESSORA">BENEDITA DE CAMPOS MARCOLONGO PROFESSORA</option>
-            <option value="BRASILIO MACHADO NETO COMENDADOR">BRASILIO MACHADO NETO COMENDADOR</option>
-            <option value="CARLINDO REIS">CARLINDO REIS</option>
-            <option value="CARLOS MOLTENI PROFESSOR">CARLOS MOLTENI PROFESSOR</option>
-            <option value="CHOJIRO SEGAWA">CHOJIRO SEGAWA</option>
-            <option value="CONJUNTO HABITACIONAL PARQUE DOURADO II">CONJUNTO HABITACIONAL PARQUE DOURADO II</option>
-            <option value="DAVID JORGE CURI PROFESSOR">DAVID JORGE CURI PROFESSOR</option>
-            <option value="EDIR DO COUTO ROSA PROFESSOR">EDIR DO COUTO ROSA PROFESSOR</option>
-            <option value="ELIANE APARECIDA DANTAS DA SILVA PROFESSORA">ELIANE APARECIDA DANTAS DA SILVA PROFESSORA
-            </option>
-            <option value="EUCLIDES IGESCA">EUCLIDES IGESCA</option>
-            <option value="GERALDO JUSTINIANO DE REZENDE SILVA PROFESSOR">GERALDO JUSTINIANO DE REZENDE SILVA PROFESSOR
-            </option>
-            <option value="GILBERTO DE CARVALHO PROFESSOR">GILBERTO DE CARVALHO PROFESSOR</option>
-            <option value="GIOVANNI BATTISTA RAFFO PROFESSOR DOUTOR">GIOVANNI BATTISTA RAFFO PROFESSOR DOUTOR</option>
-            <option value="HELENA ZERRENNER">HELENA ZERRENNER</option>
-            <option value="IGNES CORREA ALLEN PROFESSORA">IGNES CORREA ALLEN PROFESSORA</option>
-            <option value="IIJIMA">IIJIMA</option>
-            <option value="JACQUES YVES COUSTEAU COMANDANTE">JACQUES YVES COUSTEAU COMANDANTE</option>
-            <option value="JANDYRA COUTINHO PROFESSORA">JANDYRA COUTINHO PROFESSORA</option>
-            <option value="JARDIM SAO PAULO II">JARDIM SAO PAULO II</option>
-            <option value="JOSE BENEDITO LEITE BARTHOLOMEI PROFESSOR">JOSE BENEDITO LEITE BARTHOLOMEI PROFESSOR</option>
-            <option value="JOSE CAMILO DE ANDRADE">JOSE CAMILO DE ANDRADE</option>
-            <option value="JOSE EDUARDO VIEIRA RADUAN DOUTOR">JOSE EDUARDO VIEIRA RADUAN DOUTOR</option>
-            <option value="JOSE PAPAIZ PROFESSOR">JOSE PAPAIZ PROFESSOR</option>
-            <option value="JOVIANO SATLER DE LIMA PROFESSOR">JOVIANO SATLER DE LIMA PROFESSOR</option>
-            <option value="JUSSARA FEITOSA DOMSCHKE PROFESSORA">JUSSARA FEITOSA DOMSCHKE PROFESSORA</option>
-            <option value="JUSTINO MARCONDES RANGEL PROFESSOR">JUSTINO MARCONDES RANGEL PROFESSOR</option>
-            <option value="LANDIA SANTOS BATISTA PROFESSORA">LANDIA SANTOS BATISTA PROFESSORA</option>
-            <option value="LEDA FERNANDES LOPES PROFESSORA">LEDA FERNANDES LOPES PROFESSORA</option>
-            <option value="LUCY FRANCO KOWALSKI PROFESSORA">LUCY FRANCO KOWALSKI PROFESSORA</option>
-            <option value="LUIZ BIANCONI">LUIZ BIANCONI</option>
-            <option value="LUIZA HIDAKA PROFESSORA">LUIZA HIDAKA PROFESSORA</option>
-            <option value="MANUEL DOS SANTOS PAIVA">MANUEL DOS SANTOS PAIVA</option>
-            <option value="MARIA ELISA DE AZEVEDO CINTRA PROFESSORA">MARIA ELISA DE AZEVEDO CINTRA PROFESSORA</option>
-            <option value="MARIO MANOEL DANTAS DE AQUINO PROFESSOR">MARIO MANOEL DANTAS DE AQUINO PROFESSOR</option>
-            <option value="MARTHA CALIXTO CAZAGRANDE">MARTHA CALIXTO CAZAGRANDE</option>
-            <option value="MASAITI SEKINE PROFESSOR">MASAITI SEKINE PROFESSOR</option>
-            <option value="MORATO DE OLIVEIRA DOUTOR">MORATO DE OLIVEIRA DOUTOR</option>
-            <option value="OLAVO LEONEL FERREIRA PROFESSOR">OLAVO LEONEL FERREIRA PROFESSOR</option>
-            <option value="OLZANETTI GOMES PROFESSOR">OLZANETTI GOMES PROFESSOR</option>
-            <option value="OSWALDO DE OLIVEIRA LIMA">OSWALDO DE OLIVEIRA LIMA</option>
-            <option value="PAULO AMERICO PAGANUCCI PROFESSOR">PAULO AMERICO PAGANUCCI PROFESSOR</option>
-            <option value="PAULO KOBAYASHI PROFESSOR">PAULO KOBAYASHI PROFESSOR</option>
-            <option value="RAUL BRASIL PROFESSOR">RAUL BRASIL PROFESSOR</option>
-            <option value="ROBERTO BIANCHI">ROBERTO BIANCHI</option>
-            <option value="SEBASTIAO PEREIRA VIDAL">SEBASTIAO PEREIRA VIDAL</option>
-            <option value="TACITO ZANCHETTA PREFEITO">TACITO ZANCHETTA PREFEITO</option>
-            <option value="TOCHICHICO YOCHICAVA PROFESSOR">TOCHICHICO YOCHICAVA PROFESSOR</option>
-            <option value="TOKUZO TERAZAKI">TOKUZO TERAZAKI</option>
-            <option value="YOLANDA BASSI PROFESSORA">YOLANDA BASSI PROFESSORA</option>
-            <option value="ZEIKICHI FUKUOKA">ZEIKICHI FUKUOKA</option>
-            <option value="ZELIA GATTAI AMADO">ZELIA GATTAI AMADO</option>
-          </select>
-        </div>
-
-
-        <div class="field">
-          <label for="tipo_equipamento">Tipo de equipamento</label>
-          <select id="tipo_equipamento" name="tipo_equipamento" required>
-            <option value="">Selecione</option>
-            <option value="Tablet">Tablet</option>
-            <option value="Notebook Positivo">Notebook Positivo</option>
-            <option value="Notebook Lenovo">Notebook Lenovo</option>
-            <option value="Desktop">Desktop</option>
-            <option value="Celular">Celular</option>
-          </select>
-        </div>
-
-
-        <div class="field">
-          <label for="data_ocorrencia">Data</label>
-          <input type="date" id="data_ocorrencia" name="data_ocorrencia" />
-        </div>
-
-        <div class="field">
-          <label for="numero_serie">Número de série / patrimônio</label>
-          <input type="text" id="numero_serie" name="numero_serie" placeholder="Ex.: S123456 ou 000123" />
-        </div>
-
-
-        <div class="field">
-          <label for="descricao_problema">Descrição do problema</label>
-          <textarea id="descricao_problema" name="descricao_problema" rows="4"
-            placeholder="Descreva o problema, sintomas, número de patrimônio, etc."></textarea>
-        </div>
-
-
-        <div class="field">
-          <label>Foi resolvido?</label>
-          <div class="radio-group">
-            <label>
-              <input type="radio" name="resolvido" value="sim" checked />
-              <span>Sim</span>
-            </label>
-            <label>
-              <input type="radio" name="resolvido" value="nao" />
-              <span>Não</span>
-            </label>
+    <header class="site-header">
+      <div class="container nav">
+        <div class="brand">
+          <div class="logo-dot"></div>
+          <div>
+            <span class="brand-name">Controle SEINTEC</span>
+            <span class="brand-role">Controle de Equipamentos</span>
           </div>
         </div>
 
+        <nav class="nav-links">
+          <a href="index.html">Início</a>
+          <a href="cadastro.html" class="active">Novo Cadastro</a>
+          <a href="lista.html">Lista de Itens</a>
+          <a href="relatorio.html">Relatórios</a>
+        </nav>
+      </div>
+    </header>
 
-        <div class="field" id="campoMotivo" style="display: none;">
-          <label for="motivo_nao_resolvido">Motivo de não ter sido resolvido</label>
-          <textarea id="motivo_nao_resolvido" name="motivo_nao_resolvido" rows="3"
-            placeholder="Ex.: aguardando peça, falta de tempo, equipamento em outra unidade..."></textarea>
+    <main class="container main-content">
+      <div class="page-header">
+        <div>
+          <h1>Cadastro de Manutenção</h1>
+          <p>
+            Preencha os dados da visita e adicione os equipamentos verificados.
+          </p>
+        </div>
+      </div>
+
+      <div id="successAlert" class="alert-success" style="display: none">
+        Registro salvo com sucesso! ✅
+      </div>
+
+      <form id="formCadastro">
+        <div class="form-section">
+          <h3 class="section-title">📍 Dados da Visita</h3>
+
+          <div class="form-grid">
+            <div class="field full">
+              <label for="escola">Unidade Escolar</label>
+              <select id="escola" name="escola" required>
+                <option value="">Selecione a escola...</option>
+                <option value="ALFREDO ROBERTO">ALFREDO ROBERTO</option>
+                <option value="ALICE ROMANOS PROFESSORA">
+                  ALICE ROMANOS PROFESSORA
+                </option>
+                <option value="ANDERSON DA SILVA SOARES">
+                  ANDERSON DA SILVA SOARES
+                </option>
+                <option value="ANGELA SUELI PONTES DIAS PROFESSORA">
+                  ANGELA SUELI PONTES DIAS PROFESSORA
+                </option>
+                <option value="ANIS FADUL DOUTOR">ANIS FADUL DOUTOR</option>
+                <option value="ANTONIO BRASILIO MENEZES DA FONSECA PROFESSOR">
+                  ANTONIO BRASILIO MENEZES DA FONSECA PROFESSOR
+                </option>
+                <option value="ANTONIO GARCIA VEREADOR">
+                  ANTONIO GARCIA VEREADOR
+                </option>
+                <option value="ANTONIO JOSE CAMPOS DE MENEZES PROFESSOR">
+                  ANTONIO JOSE CAMPOS DE MENEZES PROFESSOR
+                </option>
+                <option value="ANTONIO RODRIGUES DE ALMEIDA">
+                  ANTONIO RODRIGUES DE ALMEIDA
+                </option>
+                <option value="ANTONIO VALDEMAR GALO VEREADOR">
+                  ANTONIO VALDEMAR GALO VEREADOR
+                </option>
+                <option value="BATISTA RENZI">BATISTA RENZI</option>
+                <option value="BENEDITA DE CAMPOS MARCOLONGO PROFESSORA">
+                  BENEDITA DE CAMPOS MARCOLONGO PROFESSORA
+                </option>
+                <option value="BRASILIO MACHADO NETO COMENDADOR">
+                  BRASILIO MACHADO NETO COMENDADOR
+                </option>
+                <option value="CARLINDO REIS">CARLINDO REIS</option>
+                <option value="CARLOS MOLTENI PROFESSOR">
+                  CARLOS MOLTENI PROFESSOR
+                </option>
+                <option value="CHOJIRO SEGAWA">CHOJIRO SEGAWA</option>
+                <option value="CONJUNTO HABITACIONAL PARQUE DOURADO II">
+                  CONJUNTO HABITACIONAL PARQUE DOURADO II
+                </option>
+                <option value="DAVID JORGE CURI PROFESSOR">
+                  DAVID JORGE CURI PROFESSOR
+                </option>
+                <option value="EDIR DO COUTO ROSA PROFESSOR">
+                  EDIR DO COUTO ROSA PROFESSOR
+                </option>
+                <option value="ELIANE APARECIDA DANTAS DA SILVA PROFESSORA">
+                  ELIANE APARECIDA DANTAS DA SILVA PROFESSORA
+                </option>
+                <option value="EUCLIDES IGESCA">EUCLIDES IGESCA</option>
+                <option value="GERALDO JUSTINIANO DE REZENDE SILVA PROFESSOR">
+                  GERALDO JUSTINIANO DE REZENDE SILVA PROFESSOR
+                </option>
+                <option value="GILBERTO DE CARVALHO PROFESSOR">
+                  GILBERTO DE CARVALHO PROFESSOR
+                </option>
+                <option value="GIOVANNI BATTISTA RAFFO PROFESSOR DOUTOR">
+                  GIOVANNI BATTISTA RAFFO PROFESSOR DOUTOR
+                </option>
+                <option value="HELENA ZERRENNER">HELENA ZERRENNER</option>
+                <option value="IGNES CORREA ALLEN PROFESSORA">
+                  IGNES CORREA ALLEN PROFESSORA
+                </option>
+                <option value="IIJIMA">IIJIMA</option>
+                <option value="JACQUES YVES COUSTEAU COMANDANTE">
+                  JACQUES YVES COUSTEAU COMANDANTE
+                </option>
+                <option value="JANDYRA COUTINHO PROFESSORA">
+                  JANDYRA COUTINHO PROFESSORA
+                </option>
+                <option value="JARDIM SAO PAULO II">JARDIM SAO PAULO II</option>
+                <option value="JOSE BENEDITO LEITE BARTHOLOMEI PROFESSOR">
+                  JOSE BENEDITO LEITE BARTHOLOMEI PROFESSOR
+                </option>
+                <option value="JOSE CAMILO DE ANDRADE">
+                  JOSE CAMILO DE ANDRADE
+                </option>
+                <option value="JOSE EDUARDO VIEIRA RADUAN DOUTOR">
+                  JOSE EDUARDO VIEIRA RADUAN DOUTOR
+                </option>
+                <option value="JOSE PAPAIZ PROFESSOR">
+                  JOSE PAPAIZ PROFESSOR
+                </option>
+                <option value="JOVIANO SATLER DE LIMA PROFESSOR">
+                  JOVIANO SATLER DE LIMA PROFESSOR
+                </option>
+                <option value="JUSSARA FEITOSA DOMSCHKE PROFESSORA">
+                  JUSSARA FEITOSA DOMSCHKE PROFESSORA
+                </option>
+                <option value="JUSTINO MARCONDES RANGEL PROFESSOR">
+                  JUSTINO MARCONDES RANGEL PROFESSOR
+                </option>
+                <option value="LANDIA SANTOS BATISTA PROFESSORA">
+                  LANDIA SANTOS BATISTA PROFESSORA
+                </option>
+                <option value="LEDA FERNANDES LOPES PROFESSORA">
+                  LEDA FERNANDES LOPES PROFESSORA
+                </option>
+                <option value="LUCY FRANCO KOWALSKI PROFESSORA">
+                  LUCY FRANCO KOWALSKI PROFESSORA
+                </option>
+                <option value="LUIZ BIANCONI">LUIZ BIANCONI</option>
+                <option value="LUIZA HIDAKA PROFESSORA">
+                  LUIZA HIDAKA PROFESSORA
+                </option>
+                <option value="MANUEL DOS SANTOS PAIVA">
+                  MANUEL DOS SANTOS PAIVA
+                </option>
+                <option value="MARIA ELISA DE AZEVEDO CINTRA PROFESSORA">
+                  MARIA ELISA DE AZEVEDO CINTRA PROFESSORA
+                </option>
+                <option value="MARIO MANOEL DANTAS DE AQUINO PROFESSOR">
+                  MARIO MANOEL DANTAS DE AQUINO PROFESSOR
+                </option>
+                <option value="MARTHA CALIXTO CAZAGRANDE">
+                  MARTHA CALIXTO CAZAGRANDE
+                </option>
+                <option value="MASAITI SEKINE PROFESSOR">
+                  MASAITI SEKINE PROFESSOR
+                </option>
+                <option value="MORATO DE OLIVEIRA DOUTOR">
+                  MORATO DE OLIVEIRA DOUTOR
+                </option>
+                <option value="OLAVO LEONEL FERREIRA PROFESSOR">
+                  OLAVO LEONEL FERREIRA PROFESSOR
+                </option>
+                <option value="OLZANETTI GOMES PROFESSOR">
+                  OLZANETTI GOMES PROFESSOR
+                </option>
+                <option value="OSWALDO DE OLIVEIRA LIMA">
+                  OSWALDO DE OLIVEIRA LIMA
+                </option>
+                <option value="PAULO AMERICO PAGANUCCI PROFESSOR">
+                  PAULO AMERICO PAGANUCCI PROFESSOR
+                </option>
+                <option value="PAULO KOBAYASHI PROFESSOR">
+                  PAULO KOBAYASHI PROFESSOR
+                </option>
+                <option value="RAUL BRASIL PROFESSOR">
+                  RAUL BRASIL PROFESSOR
+                </option>
+                <option value="ROBERTO BIANCHI">ROBERTO BIANCHI</option>
+                <option value="SEBASTIAO PEREIRA VIDAL">
+                  SEBASTIAO PEREIRA VIDAL
+                </option>
+                <option value="TACITO ZANCHETTA PREFEITO">
+                  TACITO ZANCHETTA PREFEITO
+                </option>
+                <option value="TOCHICHICO YOCHICAVA PROFESSOR">
+                  TOCHICHICO YOCHICAVA PROFESSOR
+                </option>
+                <option value="TOKUZO TERAZAKI">TOKUZO TERAZAKI</option>
+                <option value="YOLANDA BASSI PROFESSORA">
+                  YOLANDA BASSI PROFESSORA
+                </option>
+                <option value="ZEIKICHI FUKUOKA">ZEIKICHI FUKUOKA</option>
+                <option value="ZELIA GATTAI AMADO">ZELIA GATTAI AMADO</option>
+              </select>
+            </div>
+
+            <div class="field full">
+              <label for="data_ocorrencia">Data da Visita</label>
+              <input
+                type="date"
+                id="data_ocorrencia"
+                name="data_ocorrencia"
+                required
+              />
+            </div>
+          </div>
         </div>
 
-        <div class="edit-actions">
-          <button type="submit">Salvar cadastro</button>
+        <div class="form-section">
+          <h3 class="section-title">💻 Equipamentos</h3>
+
+          <div id="lista-equipamentos"></div>
+
+          <div class="actions-container">
+            <button type="button" id="btnAdicionarItem">
+              + Adicionar outro equipamento
+            </button>
+
+            <button type="submit">Salvar Cadastro</button>
+          </div>
         </div>
       </form>
-    </section>
-  </main>
+    </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <span>Cadastro de Equipamentos Escolares</span>
-      <span class="dot-separator"></span>
-      <span>Formulário de manutenção</span>
-    </div>
-  </footer>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>Relatório de Equipamentos Escolares</span>
+        <span class="dot-separator"></span>
+        <span>Formulário de Manutenção</span>
+      </div>
+    </footer>
 
+    <template id="template-equipamento">
+      <div class="equipamento-item">
+        <button type="button" class="btn-remover">Remover item 🗑️</button>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="script.js"></script>
+        <div class="form-grid">
+          <div class="field">
+            <label>Tipo de equipamento</label>
+            <select class="input-tipo" required>
+              <option value="">Selecione...</option>
+              <option value="Chromebook">Chromebook</option>
+              <option value="Notebook Multilaser">Notebook Multilaser</option>
+              <option value="Tablet">Tablet</option>
+              <option value="Notebook Positivo">Notebook Positivo</option>
+              <option value="Notebook Lenovo">Notebook Lenovo</option>
+              <option value="Desktop">Desktop</option>
+              <option value="Celular">Celular</option>
+            </select>
+          </div>
 
-</body>
+          <div class="field">
+            <label>Nº Série / Patrimônio</label>
+            <input type="text" class="input-serie" placeholder="Ex.: S123456" />
+          </div>
 
+          <div class="field full">
+            <label>Descrição do problema</label>
+            <textarea
+              class="input-problema"
+              rows="2"
+              placeholder="Descreva o problema, sintomas, etc."
+            ></textarea>
+          </div>
+
+          <div class="field full">
+            <label style="margin-bottom: 8px; display: block"
+              >Foi resolvido?</label
+            >
+            <div class="radio-group">
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  value="sim"
+                  class="radio-resolvido"
+                  checked
+                />
+                <span>Sim, resolvido</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" value="nao" class="radio-resolvido" />
+                <span>Não</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field full campo-motivo" style="display: none">
+            <label>Motivo da pendência</label>
+            <textarea
+              class="input-motivo"
+              rows="2"
+              placeholder="Ex.: aguardando peça..."
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
