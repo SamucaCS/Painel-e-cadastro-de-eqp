@@ -1,7 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista – Equipamentos Escolares</title>
@@ -9,75 +8,73 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet" />
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <link rel="stylesheet" href="styles.css" />
-</head>
+  </head>
 
-<body data-page="lista">
-
+  <body>
     <div class="bg-grid"></div>
-    <header class="site-header">
-        <div class="container nav">
-            <div class="brand">
-                <div class="logo-dot"></div>
-                <div>
-                    <span class="brand-name">Relatório de Equipamentos</span>
-                    <span class="brand-role">Rede de Escolas</span>
-                </div>
-            </div>
 
-            <nav class="nav-links">
-                <a href="cadastro.html">Cadastro de equipamentos para manutenção</a>
-                <a href="lista.html">Lista dos itens cadastrados</a>
-                <a href="relatorio.html">Painel de controle dos Equipamentos</a>
-            </nav>
-            <div class="actions-header" style="margin-bottom: 20px; display: flex; justify-content: flex-end;">
-              
-            </div>
+    <header class="site-header">
+      <div class="container nav">
+        <div class="brand">
+          <div class="logo-dot"></div>
+          <div>
+            <span class="brand-name">Controle SEINTEC</span>
+            <span class="brand-role">Rede de Escolas</span>
+          </div>
         </div>
+
+        <nav class="nav-links">
+          <a href="index.html">Início</a>
+          <a href="cadastro.html">Cadastro</a>
+          <a href="lista.html" class="active">Lista de Itens</a>
+          <a href="relatorio.html">Relatórios</a>
+        </nav>
+      </div>
     </header>
 
     <main class="container main-content">
+      <section class="page-header">
+        <div>
+          <h1>Registros de Manutenção</h1>
+          <p>
+            Visualize o histórico de ocorrências e equipamentos cadastrados.
+          </p>
+        </div>
 
-        <section class="page-header">
-            <div>
-                <h1>Lista de Equipamentos / Chamados</h1>
-                <p>Visualize todos os registros cadastrados no sistema.</p>
-            </div>
-            <div class="pill pill-soft">Página 2 de 4</div>
-        </section>
+        <div>
+          <button id="btnLimparTudo" class="btn-danger-outline">
+            🗑️ Limpar Lista Completa
+          </button>
+        </div>
+      </section>
 
+      <section class="card">
+        <h2 style="margin-bottom: 0.5rem">Itens Cadastrados</h2>
+        <p class="card-subtitle">
+          Abaixo estão listados todos os equipamentos que passaram por
+          manutenção ou verificação.
+        </p>
 
-        <section class="card">
-            <h2 style="margin-bottom: .5rem;">Registros cadastrados</h2>
-            <p class="card-subtitle">
-                Os dados abaixo são carregados a partir dos cadastros realizados.
-            </p>
-
-            <div id="tabela-container" class="table-wrapper">
-
-            </div>
-        </section>
+        <div id="tabela-container" class="table-wrapper">
+          <div class="empty-state">Carregando dados...</div>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
-        <div class="container footer-inner">
-            <span>Relatório de Equipamentos Escolares</span>
-            <span class="dot-separator"></span>
-            <span>Lista de registros</span>
-        </div>
+      <div class="container footer-inner">
+        <span>Relatório de Equipamentos Escolares</span>
+        <span class="dot-separator"></span>
+        <span>Lista de Registros</span>
+      </div>
     </footer>
-
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script src="script.js"></script>
-</body>
-
-</html>
-
-</body>
-
+  </body>
 </html>
